@@ -6,3 +6,20 @@
 .compound {
 	scroll-margin: 83px;
 }
+
+.progress-bar {
+  position: fixed;
+  top: 84;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-color-brighter);
+  transform-origin: 0%;
+  z-index: 1000;
+}
+
+@media only screen and (min-width: 1200px) {
+  .progress-bar {
+    height: 6px;
+  }
+}

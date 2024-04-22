@@ -3,13 +3,15 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
 from kindergarten.models import (
-    Intro,
+    Hero,
+    Program,
     TypicalDay,
     Feature,
     CompoundImage,
     OpenHouseImage,
     Team,
-    Address,
+    Contact,
+    Register,
 )
 
 
@@ -25,9 +27,9 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'name']
 
 
-class IntroSerializer(serializers.HyperlinkedModelSerializer):
+class HeroSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Intro
+        model = Hero
         fields = [
             'id',
             'url',
@@ -35,8 +37,18 @@ class IntroSerializer(serializers.HyperlinkedModelSerializer):
             'hero_image',
             'brand',
             'motto',
-            'program_title',
-            'program',
+        ]
+        read_only_fields = ['id']
+
+
+class ProgramSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Program
+        fields = [
+            'id',
+            'url',
+            'title',
+            'content',
         ]
         read_only_fields = ['id']
 
@@ -105,9 +117,9 @@ class TeamSerializer(serializers.HyperlinkedModelSerializer):
         read_only_fields = ['id']
 
 
-class AddressSerializer(serializers.HyperlinkedModelSerializer):
+class ContactSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Address
+        model = Contact
         fields = [
             'id',
             'url',
@@ -120,5 +132,18 @@ class AddressSerializer(serializers.HyperlinkedModelSerializer):
             'image',
             'facebook',
             'instagram',
+        ]
+        read_only_fields = ['id']
+
+
+class RegisterSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Register
+        fields = [
+            'id',
+            'url',
+            'title',
+            'subtitle',
+            'requirements',
         ]
         read_only_fields = ['id']

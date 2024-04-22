@@ -15,12 +15,19 @@ import os
 from os import environ
 import urllib.parse as up
 from dotenv import load_dotenv
+import cloudinary
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = Path(__file__).resolve().parent.parent.parent
 load_dotenv(BASE_DIR / '.env')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'frontend/public')
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'frontend/public')
 MEDIA_URL = '/frontend/public/'
+# vercel
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles", "static")
+
 
 # Parsing database url
 up.uses_netloc.append('postgres')
@@ -31,13 +38,19 @@ url = up.urlparse(environ.get('DATABASE_URL'))
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-a^_g&%f*4^a__6umf_m!pwewowm1$$&hsv_pta@hc26a+329j4'
+SECRET_KEY = environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = environ.get("DEBUG") != "False"
 
-ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'http://localhost:8000',
+    'localhost',
+    '.vercel.app',
+    '.now.sh',
+]
 
 # Application definition
 
@@ -50,6 +63,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # third apps
     'rest_framework',
+    'whitenoise.runserver_nostatic',
+    'cloudinary',
+    'cloudinary_storage',
+    # 'cloudinary_storage',
     # installed apps
     'kindergarten',
 ]
@@ -62,6 +79,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'school_project.urls'
@@ -83,6 +102,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'school_project.wsgi.application'
+# vercel_app/settings.py
+WSGI_APPLICATION = 'school_project.wsgi.app'
 
 
 # Database
@@ -140,3 +161,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+cloudinary.config(
+    cloud_name=environ.get('CLOUD_NAME'),
+    api_key=environ.get('API_KEY'),
+    api_secret=environ.get('API_SECRET'),
+)
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

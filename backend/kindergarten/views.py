@@ -1,24 +1,29 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, permissions
 from kindergarten.models import (
-    Intro,
+    Hero,
+    Program,
     TypicalDay,
     Feature,
     CompoundImage,
     OpenHouseImage,
     Team,
-    Address,
+    Contact,
+    Register,
 )
+
 from kindergarten.serializers import (
     UserSerializer,
     GroupSerializer,
-    IntroSerializer,
+    HeroSerializer,
+    ProgramSerializer,
     TypicalDaySerializer,
     FeatureSerializer,
     CompoundImageSerializer,
     OpenHouseImageSerializer,
     TeamSerializer,
-    AddressSerializer,
+    ContactSerializer,
+    RegisterSerializer,
 )
 
 
@@ -35,9 +40,15 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class IntroViewSet(viewsets.ModelViewSet):
-    queryset = Intro.objects.all()
-    serializer_class = IntroSerializer
+class HeroViewSet(viewsets.ModelViewSet):
+    queryset = Hero.objects.all()
+    serializer_class = HeroSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class ProgramViewSet(viewsets.ModelViewSet):
+    queryset = Program.objects.all()
+    serializer_class = ProgramSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
@@ -71,7 +82,13 @@ class TeamViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class AddressViewSet(viewsets.ModelViewSet):
-    queryset = Address.objects.all()
-    serializer_class = AddressSerializer
+class ContactViewSet(viewsets.ModelViewSet):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class RegisterViewSet(viewsets.ModelViewSet):
+    queryset = Register.objects.all()
+    serializer_class = RegisterSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

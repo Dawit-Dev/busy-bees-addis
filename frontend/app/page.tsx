@@ -1,8 +1,16 @@
 import Home from '@/components/home'
 
-async function getIntro() {
-	const res = await fetch('http://localhost:8000/intro')
+async function getHero() {
+	const res = await fetch('https://busy-bees-addis-server.vercel.app/hero')
+	if (!res.ok) {
+		throw new Error('Failed to fetch data')
+	}
 
+	return res.json()
+}
+
+async function getProgram() {
+	const res = await fetch('https://busy-bees-addis-server.vercel.app/program')
 	if (!res.ok) {
 		throw new Error('Failed to fetch data')
 	}
@@ -11,7 +19,9 @@ async function getIntro() {
 }
 
 async function getDayActivities() {
-	const res = await fetch('http://localhost:8000/typical-day')
+	const res = await fetch(
+		'https://busy-bees-addis-server.vercel.app/typical-day'
+	)
 
 	if (!res.ok) {
 		throw new Error('Failed to fetch data')
@@ -21,7 +31,7 @@ async function getDayActivities() {
 }
 
 async function getFeatures() {
-	const res = await fetch('http://localhost:8000/features')
+	const res = await fetch('https://busy-bees-addis-server.vercel.app/features')
 
 	if (!res.ok) {
 		throw new Error('Failed to fetch data')
@@ -31,7 +41,9 @@ async function getFeatures() {
 }
 
 async function getCompoundImages() {
-	const res = await fetch('http://localhost:8000/compound-images')
+	const res = await fetch(
+		'https://busy-bees-addis-server.vercel.app/compound-images'
+	)
 	if (!res.ok) {
 		throw new Error('Failed to fetch data')
 	}
@@ -40,7 +52,9 @@ async function getCompoundImages() {
 }
 
 async function getOpenHouseImages() {
-	const res = await fetch('http://localhost:8000/open-house-images')
+	const res = await fetch(
+		'https://busy-bees-addis-server.vercel.app/open-house-images'
+	)
 	if (!res.ok) {
 		throw new Error('Failed to fetch data')
 	}
@@ -49,7 +63,7 @@ async function getOpenHouseImages() {
 }
 
 async function getTeam() {
-	const res = await fetch('http://localhost:8000/team')
+	const res = await fetch('https://busy-bees-addis-server.vercel.app/team')
 	if (!res.ok) {
 		throw new Error('Failed to fetch data')
 	}
@@ -57,17 +71,29 @@ async function getTeam() {
 	return res.json()
 }
 
-async function getAddress() {
-	const res = await fetch('http://localhost:8000/address')
+async function getContactInfo() {
+	const res = await fetch('https://busy-bees-addis-server.vercel.app/contact')
 	if (!res.ok) {
 		throw new Error('Failed to fetch data')
 	}
 
 	return res.json()
 }
+
+async function getRegister() {
+	const res = await fetch('https://busy-bees-addis-server.vercel.app/register')
+	if (!res.ok) {
+		throw new Error('Failed to fetch data')
+	}
+
+	return res.json()
+}
+
 
 export default async function HomePage() {
-	const intro = await getIntro()
+	const hero = await getHero()
+
+	const program = await getProgram()
 
 	const activities = await getDayActivities()
 	activities.sort((a: object | any, b: object | any) => a.id - b.id)
@@ -80,17 +106,21 @@ export default async function HomePage() {
 
 	const team = await getTeam()
 
-	const address = await getAddress()
+	const contactInfo = await getContactInfo()
+
+	const register = await getRegister()
 
 	return (
 		<Home
-			intro={intro}
+			hero={hero}
+			program={program}
 			day={activities}
 			features={features}
 			compound_images={compoundImages}
 			open_house_images={openHouseImages}
 			team={team}
-			address={address}
+			contactInfo={contactInfo}
+			register={register}
 		/>
 	)
 }

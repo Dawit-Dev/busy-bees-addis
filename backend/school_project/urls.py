@@ -15,6 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
@@ -23,13 +26,15 @@ from kindergarten import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
-router.register(r'intro', views.IntroViewSet)
+router.register(r'hero', views.HeroViewSet)
+router.register(r'program', views.ProgramViewSet)
 router.register(r'typical-day', views.TypicalDayViewSet)
 router.register(r'features', views.FeatureViewSet)
 router.register(r'compound-images', views.CompoundImageViewSet)
 router.register(r'open-house-images', views.OpenHouseImageViewSet)
 router.register(r'team', views.TeamViewSet)
-router.register(r'address', views.AddressViewSet)
+router.register(r'contact', views.ContactViewSet)
+router.register(r'register', views.RegisterViewSet)
 
 
 urlpatterns = [
@@ -37,3 +42,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
+
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

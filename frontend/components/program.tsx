@@ -1,93 +1,65 @@
-import Image from 'next/image'
-import {
-	montserrat,
-	raleway,
-	playfairDisplay,
-	playfairDisplayItalic,
-	oswald,
-	concertOne,
-} from '@/styles/fonts'
+'use client'
+
+import { raleway, playfairDisplayItalic } from '@/styles/fonts'
+import TypicalDay from './typical-day'
+import AnimateContainer from '@/animations/container-animation'
 import styles from '@/styles/program.module.css'
 
-interface Intro {
-	intro: string[]
+type ProgramProps = {
+	id: number
+	title: string
+	content: string
 }
 
 type TypicalDayProps = {
 	title: string
 	reading_bee_image: string
-	activities: string[]
+	activities: string
 }
 
 export default function Program({
-	intro,
+	programResponse,
 	day,
 }: {
-	intro: Intro
+	programResponse: ProgramProps[]
 	day: TypicalDayProps[]
 }) {
 	const left: string[] = []
 	const right: string[] = []
-	const introOb: object | any = intro
-	const introObject = introOb[0]
-	introObject.program
+	let program: object | any = programResponse
+	program = program[0]
+	program.content
 		.split('\r\n')
 		.forEach((paragraph: string, index: number) =>
 			index <= 1 ? left.push(paragraph) : right.push(paragraph)
 		)
 	return (
 		<section id='program' className={styles['program-section']}>
-			<div className={styles['heading-wrapper']}>
-				<h1
-					className={`${styles.heading} ${playfairDisplay.className}`}
-				>
-					{introObject.program_title}
-				</h1>
-				<div className={styles.line}></div>
-			</div>
-			<div className={styles.program}>
-				<div className={styles.left}>
-					{left.map((paragraph: string, index: number) => (
-						<p key={index}>{paragraph}</p>
-					))}
+			<AnimateContainer y={20} delay={0.4} duration={1}>
+				<div className={styles['heading-wrapper']}>
+					<h1
+						className={`${styles.heading} ${playfairDisplayItalic.className}`}
+					>
+						{program.title.toLowerCase()}
+					</h1>
+					<div className={styles.line}></div>
 				</div>
-				<div className={styles.right}>
-					{right.map((paragraph: string, index: number) => (
-						<p key={index}>{paragraph}</p>
-					))}
+			</AnimateContainer>
+			<AnimateContainer y={20} delay={0.4} duration={1} once amount={0.1}>
+				<div className={`${styles.program} ${raleway.className}`}>
+					<div className={styles.left}>
+						{left.map((paragraph: string, index: number) => (
+							<p key={index}>{paragraph}</p>
+						))}
+					</div>
+					<div className={styles.right}>
+						{right.map((paragraph: string, index: number) => (
+							<p key={index}>{paragraph}</p>
+						))}
+					</div>
 				</div>
-			</div>
-			<div className={styles['activities-section']}>
-				<h1
-					className={`${styles['activities-title']} ${playfairDisplay.className}`}
-				>
-					{day[0].title.replace(/\b[a-z]/g, (x: string) => x.toUpperCase())}
-				</h1>
-				<div className={styles['activities-grid-container']}>
-					{day.map((activity: object | any, index: number) =>
-						activity.id === 1 ? (
-							<div
-								key={index}
-								className={styles['reading-bee-image-container']}
-							>
-								<Image
-									src={activity.reading_bee_image.split('/public')[1]}
-									width={300}
-									height={200}
-									alt='Reading bee'
-									className={styles['reading-bee-image']}
-								/>
-							</div>
-						) : (
-							<ul key={activity.id}>
-								{activity.activities.map((act: string, index: number) => (
-									<li key={index}>{act}</li>
-								))}
-							</ul>
-						)
-					)}
-				</div>
-			</div>
+			</AnimateContainer>
+			<TypicalDay day={day} />
 		</section>
 	)
 }

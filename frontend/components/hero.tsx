@@ -1,40 +1,53 @@
+'use client'
+
 import Image from 'next/image'
-import {
-	montserrat,
-	raleway,
-	playfairDisplay,
-	playfairDisplayItalic,
-	oswald,
-	concertOne,
-} from '@/styles/fonts'
+import AnimateCharacters from '@/animations/character-animation'
+
+import { raleway } from '@/styles/fonts'
 import styles from '@/styles/hero.module.css'
 
-interface Intro {
-	intro: string[]
+type HeroProps = {
+	id: number
+	logo: string
+	hero_image: string
+	brand: string
+	motto: string
 }
 
-export default function Hero({ intro }: {intro: Intro}) {
-	const introOb: object | any = intro
-	const introObject = introOb[0]
+export default function Hero({ hero }: { hero: HeroProps }) {
 	return (
 		<section id='hero' className={styles.hero}>
 			<div className={styles['hero-image-container']}>
 				<Image
-					src={introObject.hero_image.split('/public')[1]}
+					alt='hero background'
+					src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/${hero.hero_image}`}
+					width={300}
+					height={300}
 					className={styles['hero-img']}
-					alt={introObject.brand}
-					width={700}
-					height={500}
+					sizes='100vw'
 				/>
-				<div className={styles.overlay}>
-					<h1 className={`${styles.brand} ${playfairDisplay.className}`}>
-						{introObject.brand}
-					</h1>
-					<h2 className={`${styles.motto} ${raleway.className}`}>
-						{introObject.motto.replace(/\b[a-z]/g, (x: string) =>
-							x.toUpperCase()
+				<div className={`${styles.overlay}`}>
+					<AnimateCharacters
+						text={hero.brand}
+						el='h1'
+						delay={0.4}
+						rotateX={360}
+						duration={1}
+						type='spring'
+						stiffness={100}
+						className={styles.brand}
+						playfair
+					/>
+					<AnimateCharacters
+						text={hero.motto.replace(/\b[a-z]/g, (x: string) =>
+							x !== 'a' ? x.toUpperCase() : x
 						)}
-					</h2>
+						el='h2'
+						delay={1.4}
+						duration={0.2}
+						x={-40}
+						className={`${styles.motto} ${raleway.className}`}
+					/>
 				</div>
 			</div>
 		</section>

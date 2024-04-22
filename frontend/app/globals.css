@@ -1,150 +1,35 @@
 :root {
-	--max-width: 1100px;
-	--border-radius: 12px;
-	--font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-		'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-		'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-	--primary-color: yellow;
-	--secondary-color: #4bac3f;
-	--tertiary-color: #825f1d;
-	--complementary-color: orange;
-	--light-green: #8ff397;
-	--light-green: #8ff3c9;
-	--accent-color: #0516ff;
-	--accent-color: red;
-	--accent-color: #4a2c40;
-	--accent-color: #df3062;
-	--accent-color: #78184A;
-
-	--accent-color-light: #e24572;
-	--accent-color-light: #f07e74;
-	--accent-color-light: #f28b82;
-	--accent-color-light: #f3978f;
-	--accent-color-light: #f3978f;
-
-	--accent-color-light: #fab162;
-	--accent-color-light: #f1e821;
-	--accent-color-light: #acbfe6;
-	--accent-color-light: #f8e5e5;
-	--accent-color-light: #f2c1d1;
-	--accent-color-light: #f4abaa;
-
-
-
-	--primary-color: #ffee05;
-	--primary-color: #f7cd46;
-	--primary-color: #abf62d;
-	--primary-color: #d6acfb;
-
-	--primary-color: #fdee30;
-	--primary-color: #fecd45;
-	--primary-color: #fab162;
-	--primary-color: #f5b935;
-	--primary-color: #ffb600;
 	--primary-color: #fdd935;
-
-	--body-background: #ffffff;
-	--primary-text-color: black;
-	--nav-links-color: black;
-	--secondary-color: #82e016;
-	--secondary-color: #abf62d;
-	--secondary-color: #45af2a;
-	--secondary-color: #4bac3f;
-
-	--secondary-color: #5daa68;
-	--secondary-color: #4bac3f;
-	--secondary-complementary: #A03FAC;
-	--secondary-complementary: #D8BFD8;
-	--secondary-complementary: #DE6FA1;
-	--secondary-complementary: #f2c1d1;
-
-
-
-
-
+	--secondary-color: #0e9b4a;
+	--tertiary-color: #643634;
+	--charcoal: #36454F;
+	--dark-charcoal: #333333;
+	--rich-gray: #1f2022;
+	/* Emerald green */
+	--light-green: #50C878;
+	--light-yellow: #F5E050;
+	--sand: #E2CA76;
+	--accent-color: #F55065;
+	--accent-color: #F16667;
+	--accent-color-brighter: #df3062;
+	--accent-color-brighter: #F2003C;
 	--nav-links-color: #825f1d;
 	--nav-links-color: #75561a;
-
-	--mobile-active-nav: #000ed1;
-	--overlay-text-color: #1a2238;
-	--overlay-text-color: #394f8a;
-	--overlay-text-color: #9cf6fb;
-	--overlay-text-color: #df3062;
-	--overlay-text-color: #bd1e51;
-
-	--overlay-text-color: #fdd935;
-	--overlay-text-color: #fa2742;
-	--overlay-text-color: #ef0d50;
-
-	--overlay-text-color: #373833;
-
-	--overlay-text-color: #1d1d2c;
-	--overlay-text-color: #2a3166;
-	--overlay-text-color: #4a2c40;
-	--overlay-text-color: #e40c28;
-	--overlay-text-color: #2568fb;
-	--overlay-text-color: #0049ff;
-	--overlay-text-color: #4d724d;
-	--overlay-text-color: #61082b;
+	--nav-links-color: rgba(101, 55, 20, 1);
 	--overlay-text-color: #ffffff;
-	--overlay-text-color: #182978;
-	--overlay-text-color: #78184A;
-	--overlay-text-color: #0b4141;
-
-
-
-	--overlay-text-bg: rgba(255, 238, 5, 0.3);
-	--overlay-text-bg: rgba(151, 143, 243, 0.5);
-	--overlay-text-bg: rgba(253, 217, 53, 0.4);
-	--overlay-text-bg: rgba(75, 172, 63, 0.4);
-	--overlay-text-bg: rgba(63, 132, 235, 0.5);
-	--overlay-text-bg: rgba(225, 225, 225, 0.6);
-	--overlay-text-bg: rgba(223, 48, 98, 0.5);
-	--overlay-text-bg: rgba(37, 104, 251, 0.6);
-	--overlay-text-bg: rgba(130, 224, 22, 0.5);
-	--overlay-text-bg: rgba(253, 217, 53, 0.5);
-
-	--overlay-text-shadow: #2568fb;
-	--overlay-text-shadow: #4a2c40;
-	--overlay-text-shadow: #e9bd43;
-	--overlay-text-shadow: #e9bd43;
-	--overlay-text-shadow: #438945;
-	--overlay-text-shadow: #4bac3f;
-	--overlay-text-shadow: #4ecb4a;
-	--overlay-text-shadow: #8db48e;
-	--overlay-text-shadow: #45af2a;
-	--overlay-text-shadow: #1181b2;
-	--overlay-text-shadow: #825f1d;
-	--overlay-text-shadow: #df3062;
-
-	--hero-background: #ac7d26;
-	--hero-background: #fbacf8;
-	--hero-background: #afacfb;
-	--hero-background: #e9bd43;
-	--hero-background: #0049ff;
-	--hero-background: #2568fb;
-	--hero-background: #8db48e;
-	--hero-background: #11abc1;
-	--hero-background: #1181b2;
-
-	--hero-background: #4ecb4a;
-	--hero-background: #45af2a;
-	--hero-background: #438945;
-	--hero-background: #8db48e;
-
-	--hero-background: #e0d916;
-	--hero-background: #4bac3f;
 	--headings-mobile-font-size: 1.5rem;
 	--headings-desktop-font-size: 3rem;
+	--headings-desktop-font-size: 60px;
 	--headings-mobile-font-weight: 500;
+	--headings-desktop-font-weight: 500;
 	--headings-desktop-font-weight: 900;
-
 }
 
 * {
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
+	scroll-behavior: smooth;
 }
 
 html,
@@ -155,19 +40,18 @@ body {
 
 html {
 	scroll-behavior: smooth;
+	--scroll-behavior: smooth !important;
+	scroll-behavior: smooth !important;
+	font-family: var(--font-playfair-display-italic);
+	font-size: 16px;
 }
 
 body {
-	background: var(--body-background);
-	color: var(--primary-text-color);
-	font-size: 20px;
+	color: var(--rich-gray);
 	font-weight: 500;
+	/* overflow-y:hidden; */
 }
 
 a {
 	text-decoration: none;
-}
-
-.mapboxgl-popup-content {
-	padding: 0 !important;
 }

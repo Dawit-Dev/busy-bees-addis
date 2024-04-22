@@ -1,27 +1,21 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Navbar from '@/components/navbar'
 import Hero from './hero'
 import Program from './program'
 import Features from './features'
-import Compound from './compound'
-import OpenHouse from './opening'
+import PhotoGallery from './gallery'
 import Team from './team'
-import dynamic from 'next/dynamic'
-import Mapbox from './map'
-import { raleway } from '@/styles/fonts'
 import Footer from './footer'
+import { raleway } from '@/styles/fonts'
+import { motion, useScroll } from 'framer-motion'
 import styles from '@/styles/home.module.css'
-
-interface Intro {
-	intro: string[]
-}
 
 type TypicalDayProps = {
 	title: string
 	reading_bee_image: string
-	activities: string[]
+	activities: string
 }
 
 type FeatureProps = {
@@ -64,91 +58,137 @@ type AddressProps = {
 	instagram: string
 }
 
+type RegisterProps = {
+	id: number
+	title: string
+	subtitle: string
+	requirements: string
+}
+
+type HeroProps = {
+	id: number
+	logo: string
+	hero_image: string
+	brand: string
+	motto: string
+}
+
+type ProgramProps = {
+	id: number
+	title: string
+	content: string
+}
+
 export default function Home({
-	intro,
+	hero,
+	program,
 	day,
 	features,
 	compound_images,
 	open_house_images,
 	team,
-	address,
+	contactInfo,
+	register,
 }: {
-	intro: Intro
+	hero: HeroProps[]
+	program: ProgramProps[]
 	day: TypicalDayProps[]
 	features: FeatureProps[]
 	compound_images: ImagesProps[]
 	open_house_images: OpenHouseImagesProps[]
 	team: TeamProps[]
-	address: AddressProps
+	contactInfo: AddressProps
+	register: RegisterProps
 }) {
-	const addressObj: object | any = address
-	const addressObject = addressObj[0]
+	const addressObj: object | any = contactInfo
+	const contactObject = addressObj[0]
+	let heroObject: object | any = hero
+	heroObject = hero[0]
+	let logo: string = heroObject.logo
+
 	const [activeSection, setActiveSection] = useState<string>('')
 
-	const links: string[] = ['program', 'features', 'gallery', 'team', 'footer']
+	const links: string[] = [
+		'hero',
+		'program',
+		'features',
+		'gallery',
+		'team',
+		'contact',
+	]
+
+	const { scrollYProgress } = useScroll()
+	const scrollRef = useRef(null)
 
 	useEffect(() => {
+		const hero = document.getElementById('hero')
 		const program = document.getElementById('program')
 		const features = document.getElementById('features')
 		const gallery = document.getElementById('gallery')
 		const team = document.getElementById('team')
-		const footer = document.getElementById('footer')
+		const contact = document.getElementById('footer')
 
-		const sections = [program, features, gallery, team, footer]
+		const sections = [hero, program, features, gallery, team, contact]
+
+		function screenTest() {
+			if (window.innerWidth <= 868) {
+				return 0.01
+			} else {
+				return 0.02
+			}
+		}
 
 		const observerOptions = {
 			root: null,
 			rootMargin: '0px',
-			threshold: 0.2,
+			threshold: screenTest(),
 		}
 
 		const observer = new IntersectionObserver(entries => {
 			entries.forEach(entry => {
 				if (entry.isIntersecting) {
-					if (entry.target.id == 'hero') {
-						setActiveSection('home')
-					}
-					if (entry.target.id == 'program') {
-						setActiveSection('program')
-					}
-					if (entry.target.id == 'features') {
-						setActiveSection('features')
-					}
-					if (entry.target.id == 'gallery') {
-						setActiveSection('gallery')
-					}
-					if (entry.target.id == 'team') {
-						setActiveSection('team')
-					}
 					if (entry.target.id == 'footer') {
-						setActiveSection('footer')
+						setActiveSection('contact')
+					} else {
+						setActiveSection(entry.target.id)
 					}
 				}
 			})
 		}, observerOptions)
 
-		sections?.forEach(section => {
+		sections.forEach(section => {
 			section && observer.observe(section)
 		})
-	}, [])
 
-	// const MapWithNoSSR = dynamic(() => import('./map'), {
-	// 	ssr: false,
-	// })
+		return () => observer.disconnect()
+	}, [activeSection])
 
 	return (
 		<main className={`${styles.main} ${raleway.className}`}>
-			<Navbar links={links} activeSection={activeSection} />
-			<Hero intro={intro} />
-			<Program intro={intro} day={day} />
+			<motion.div
+				style={{ scaleX: scrollYProgress }}
+				className={styles['progress-bar']}
+			/>
+			<Navbar
+				logo={logo}
+				links={links}
+				activeSection={activeSection}
+				setActiveSection={setActiveSection}
+			/>
+			<Hero hero={heroObject} />
+			<Program programResponse={program} day={day} />
 			<Features features={features} />
-			<section id='gallery' className={styles.compound}>
-				<Compound compound_images={compound_images} />
-				<OpenHouse open_house_images={open_house_images} />
-			</section>
+			<PhotoGallery
+				compound_images={compound_images}
+				open_house_images={open_house_images}
+				register={register}
+			/>
 			<Team team={team} />
-			{/* <Mapbox /> */}
-			<Footer address={addressObject} links={links} activeSection={activeSection} />
+			<Footer
+				contactInfo={contactObject}
+				links={links}
+				activeSection={activeSection}
+			/>
 		</main>
 	)
 }
